@@ -1,0 +1,10 @@
+
+/.gradle/
+/.idea/
+/app/app.iml
+/build/
+/gradle/
+/library/library.iml
+/gradlew
+/gradlew.bat
+/AndroidProject.iml
