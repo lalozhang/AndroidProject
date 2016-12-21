@@ -25,4 +25,5 @@ dependencies {
     compile files('libs/fastjson-1.2.16.jar')
     compile files('libs/okhttp-3.4.1.jar')
     compile files('libs/okio-1.10.0.jar')
+    compile 'com.android.support:recyclerview-v7:25.0.1'
 }
