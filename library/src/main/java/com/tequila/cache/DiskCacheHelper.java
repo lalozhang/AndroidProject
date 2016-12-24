@@ -6,7 +6,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import com.alibaba.fastjson.JSONObject;
-import com.tequila.BaseApp;
+import com.tequila.base.BaseApplication;
 import com.tequila.utils.CompatUtil;
 import com.tequila.model.BaseResult;
 import com.tequila.utils.CheckUtils;
@@ -116,7 +116,7 @@ public class DiskCacheHelper {
 
 	public static String getDiskCacheDir() {
 		try {
-			File rootFile = getExternalFilesDir(BaseApp.getContext());
+			File rootFile = getExternalFilesDir(BaseApplication.getContext());
 			if (!rootFile.exists()) {
 				rootFile.mkdirs();
 			}

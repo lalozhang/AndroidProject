@@ -1,4 +1,4 @@
-package com.tequila.utils;
+package com.tequila.base;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -27,14 +27,20 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import com.tequila.IBaseActFrag;
+
+import com.tequila.dlg.ProgressDialogFragment;
 import com.tequila.net.IServiceMap;
 import com.tequila.net.NetworkListener;
 import com.tequila.net.NetworkManager;
 import com.tequila.net.NetworkParam;
 import com.tequila.net.Request;
+import com.tequila.utils.CheckUtils;
+import com.tequila.utils.HandlerCallbacks;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import butterknife.ButterKnife;
 
 
 public abstract class BaseActivity extends FragmentActivity implements NetworkListener, OnClickListener,
@@ -99,9 +105,6 @@ public abstract class BaseActivity extends FragmentActivity implements NetworkLi
     public ViewGroup genRootView() {
         final LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-//		XXX
-//		不知道为什么被人加上了这句，先注释掉
-//		linearLayout.setBackgroundColor(getContext().getResources().getColor(R.color.common_color_white));
         return linearLayout;
     }
 
@@ -115,35 +118,35 @@ public abstract class BaseActivity extends FragmentActivity implements NetworkLi
         return linearLayout;
     }
 
-//    public void setContentView(View view, boolean autoInject) {
-//        final ViewGroup realRoot = genRealRootView();
-//        mRoot = genRootView();
+    public void setContentView(View view, boolean autoInject) {
+        final ViewGroup realRoot = genRealRootView();
+        mRoot = genRootView();
 //        mTitleBar = new TitleBarNew(this);
 //        mRoot.addView(mTitleBar, -1, -2);
-//        mRoot.addView(view, -1, -1);
-//        realRoot.addView(mRoot, -1, -1);
-//        super.setContentView(realRoot);
+        mRoot.addView(view, -1, -1);
+        realRoot.addView(mRoot, -1, -1);
+        super.setContentView(realRoot);
 //        mTitleBar.setVisibility(View.GONE);
-//        if (autoInject) {
-//            Injector.inject(this);
-//        }
-//    }
+        if (autoInject) {
+            ButterKnife.bind(this);
+        }
+    }
 
-//    public void setContentView(int layoutResID, boolean autoInject) {
-//        final View content = getLayoutInflater().inflate(layoutResID, null);
-//        setContentView(content, autoInject);
-//    }
+    public void setContentView(int layoutResID, boolean autoInject) {
+        final View content = getLayoutInflater().inflate(layoutResID, null);
+        setContentView(content, autoInject);
+    }
 
 
-//    @Override
-//    public void setContentView(int layoutResID) {
-//        setContentView(layoutResID, true);
-//    }
+    @Override
+    public void setContentView(int layoutResID) {
+        setContentView(layoutResID, true);
+    }
 
-//    @Override
-//    public void setContentView(View view) {
-//        setContentView(view, true);
-//    }
+    @Override
+    public void setContentView(View view) {
+        setContentView(view, true);
+    }
 
 
 
@@ -220,32 +223,32 @@ public abstract class BaseActivity extends FragmentActivity implements NetworkLi
 			tag = networkParam.toString();
 		}
 
-//        QProgressDialogFragment progressDialog = (QProgressDialogFragment) getSupportFragmentManager()
-//                .findFragmentByTag(tag);
-//		OnCancelListener cancelListener = new OnCancelListener() {
-//			@Override
-//			public void onCancel(DialogInterface dialog) {
-//				NetworkManager.getInstance().cancelTaskByParam(networkParam);
-//				onNetCancel();
-//			}
-//		};
+        ProgressDialogFragment progressDialog = (ProgressDialogFragment) getSupportFragmentManager()
+                .findFragmentByTag(tag);
+		OnCancelListener cancelListener = new OnCancelListener() {
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				NetworkManager.getInstance().cancelTaskByParam(networkParam);
+				onNetCancel();
+			}
+		};
 
-//        if (progressDialog == null) {
-//            progressDialog = QProgressDialogFragment.newInstance(networkParam.progressMessage, networkParam.cancelAble,
-//					cancelListener);
-//            progressDialog.show(getSupportFragmentManager(), tag);
-//        } else {
-//            progressDialog.setMessage(networkParam.progressMessage);
-//            progressDialog.setCancelable(networkParam.cancelAble);
-//			progressDialog.setCancelListener(cancelListener);
-//        }
+        if (progressDialog == null) {
+            progressDialog = ProgressDialogFragment.newInstance(networkParam.progressMessage, networkParam.cancelAble,
+					cancelListener);
+            progressDialog.show(getSupportFragmentManager(), tag);
+        } else {
+            progressDialog.setMessage(networkParam.progressMessage);
+            progressDialog.setCancelable(networkParam.cancelAble);
+			progressDialog.setCancelListener(cancelListener);
+        }
     }
 
     @Override
     public void onShowProgress(String message, boolean cancelAble, OnCancelListener cancelListener) {
-//        QProgressDialogFragment progressDialog = QProgressDialogFragment.newInstance(message, cancelAble,
-//                cancelListener);
-//        progressDialog.show(getSupportFragmentManager(), message);
+        ProgressDialogFragment progressDialog = ProgressDialogFragment.newInstance(message, cancelAble,
+                cancelListener);
+        progressDialog.show(getSupportFragmentManager(), message);
     }
 
     @Override
@@ -273,15 +276,15 @@ public abstract class BaseActivity extends FragmentActivity implements NetworkLi
 
     @Override
     public void onCloseProgress(String message) {
-//        QProgressDialogFragment progressDialog = (QProgressDialogFragment) getSupportFragmentManager()
-//                .findFragmentByTag(message);
-//        if (progressDialog != null) {
-//            try {
-//                progressDialog.dismiss();
-//            } catch (Exception e) {
-//
-//            }
-//        }
+        ProgressDialogFragment progressDialog = (ProgressDialogFragment) getSupportFragmentManager()
+                .findFragmentByTag(message);
+        if (progressDialog != null) {
+            try {
+                progressDialog.dismiss();
+            } catch (Exception e) {
+
+            }
+        }
     }
 
     @Override

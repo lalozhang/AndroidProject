@@ -1,4 +1,4 @@
-package com.tequila.utils;
+package com.tequila.net;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -9,7 +9,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 /**
  * Created by admin on 2016/10/10.

@@ -1,18 +1,16 @@
 package com.tequila.net.task;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.tequila.model.BaseResult;
 import com.tequila.net.IServiceMap;
 import com.tequila.net.NetworkTask;
 import com.tequila.net.TaskListener;
 import com.tequila.net.TaskStatus;
-import com.tequila.utils.OkHttpManager;
+import com.tequila.net.OkHttpManager;
 
 import java.io.IOException;
 import java.util.Map;
 
-import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 public class CommonTask extends BaseTask {

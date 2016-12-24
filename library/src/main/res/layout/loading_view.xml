@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 网络加载视图布局 -->
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- 城市 -->
+
+    <com.tequila.dlg.RotateCityBackground
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+    <!-- 骆驼 -->
+
+    <ImageView
+        android:id="@+id/loading_view_camel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/loading" />
+
+</merge>
